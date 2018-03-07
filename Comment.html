@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Comment App</title>        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="comment.css" />
+    </head>
+    <body class="body_class">
+        <div class="blank_div"></div>
+        <div id="root"></div>  
+		<div class="footer_block"></div>
+        <script type="text/babel">
+            const DisplayComment = ({comments, pencilLeft, pencilTop}) => (
+                <div className="comment_box hover_box" style={{'left': pencilLeft, 'top': pencilTop}}>
+                    <div className="panel panel-default">
+                        <div className="panel-box panel-body">
+                            {    
+                                comments.map((comment) => {
+                                    if (comment.text == '') {
+                                        return <p key={comment.refId} className="text-success">No Comment</p>
+                                    } else {
+                                        return <p key={comment.refId} className="text-success">{comment.text}</p>
+                                    }
+                                }
+                            )}
+                        </div>
+                    </div>
+                    <div className="arrow_down"></div>
+                </div>
+            )
+
+            DisplayComment.propTypes = {
+                comments: React.PropTypes.array.isRequired,
+                pencilLeft: React.PropTypes.number.isRequired,
+                pencilTop: React.PropTypes.number.isRequired,
+            }
+
+            const CommentBox = ({ defaultComment, onCommentChange, saveComment, toggleBox, pencilTop, pencilLeft, changeColor }) => (
+                <div className="comment_box" style={{'left': pencilLeft, 'top': pencilTop}}>
+                    <div  className="panel panel-default">
+                        <div className="panel-body">
+                            <textarea name="comment" 
+                                placeholder="Comments..." 
+                                value={defaultComment} 
+                                onChange={ e => onCommentChange(e)}
+                                className="comment_area" 
+                                id="comment_textarea" 
+                                name="comment_textarea"
+                            />
+                            <div className="col-xs-12 color_box">
+                                <span onClick={e => changeColor(e)} data-color="red" className="div_color red_span">col</span>
+                                <span onClick={e => changeColor(e)} data-color="blue" className="div_color blue_span">col</span>
+                                <span onClick={e => changeColor(e)} data-color="gray" className="div_color gray_span">col</span>
+                                <span onClick={e => changeColor(e)} data-color="lightgray" className="div_color light_gray_span">col</span>
+                                <span onClick={e => changeColor(e)} data-color="lightgoldenrodyellow" className="div_color yellow_span">col</span>
+                            </div>
+                        </div>
+                        <div className="panel-footer">
+                            <button type="button" className="btn cancel_button" onClick={toggleBox} id="cancel_button" name="cancel_button">
+                                <span className="glyphicon glyphicon-remove text-danger" /> &nbsp;
+                                Cancel
+                            </button>
+                            <button type="button" className="btn btn-info pull-right" onClick={saveComment} id="save_button" name="save_button">
+                                <span className="glyphicon glyphicon-ok" /> &nbsp;
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                    <div className="arrow_down" />
+                </div>
+            )
+
+            CommentBox.propTypes = {
+                defaultComment: React.PropTypes.string.isRequired,
+                onCommentChange: React.PropTypes.func.isRequired,
+                saveComment: React.PropTypes.func.isRequired,
+                toggleBox: React.PropTypes.func.isRequired,
+                pencilLeft: React.PropTypes.number.isRequired,
+                pencilTop: React.PropTypes.number.isRequired,
+                changeColor: React.PropTypes.func.isRequired,
+            }
+
+            const EditIcon = ({ toggleEdit, pencilLeft, pencilTop }) => (
+                <span style={{ 'left': pencilLeft, 'top': pencilTop }} className="edit_icon glyphicon glyphicon-pencil position-a" onClick={ toggleEdit }/>
+				
+            )
+
+            EditIcon.propTypes = {
+                toggleEdit: React.PropTypes.func.isRequired,
+                pencilLeft: React.PropTypes.number.isRequired,
+                pencilTop: React.PropTypes.number.isRequired,
+            }
+
+            const Header = ({ headerText }) => (
+                <div className="col-xs-12 header">
+                    <h2 className="md-3">{ headerText }</h2>
+                </div>
+            )
+
+            Header.propTypes = {
+                headerText: React.PropTypes.string.isRequired,
+            }
+
+            const PanelBlock = ({ headerText, showEditIcon, toggleEdit, pencilLeft, pencilTop }) => (
+                <div>
+                    <Header
+                        headerText={ headerText }
+                    />
+                    <div id="content-block" className="col-xs-12 content_block">
+                          <p>Scientists india Japan warming missunderstanding sourcecode create entertainment Artificial Inteligence could read your brainwaves. India their research papertitle Deep image reconstruction from human brain activity’, scientists were able tourist replicate an imagebased what person island looking atomatic italian. These America created images arenot exactly the same as astronuats see naturally,</p>
+						  
+                          <p>but hazy rendering of your thoughts. Nonetheless, AI is able to reconstruct these images created using brain waves.
+                          Whereas it has long been thought that the externalization or visualization of states of the mind is a
+                          challenging goal in neuroscience, brain decoding using machine learning analysis of fMRI activity nowadays
+                          has enabled the visualization of perceptual content,” said the research paper.</p>
+						  
+                          <p>Although sophisticated decoding and encoding models have been developed to render human brain activity into
+                          images or movies or to the matching to exemplar images or movies (Naselaris et al., 2009; Nishimoto et al.,
+                          2011), failing to combine visual features of multiple hierarchical levels, the methods were essentially limited
+                          to the image reconstruction with low-level image bases.</p>
+						  
+						  <p>.</p>
+
+                          {showEditIcon &&
+                              <EditIcon
+                                  toggleEdit={toggleEdit}
+                                  pencilLeft={pencilLeft}
+                                  pencilTop={pencilTop}
+                              />
+                          }
+                    </div>
+                </div>
+            )
+
+            PanelBlock.propTypes = {
+                headerText: React.PropTypes.string.isRequired,
+                showEditIcon: React.PropTypes.bool.isRequired,
+                toggleEdit: React.PropTypes.func.isRequired,
+                pencilTop: React.PropTypes.number.isRequired,
+                pencilLeft:React.PropTypes.number.isRequired,
+            }
+
+
+            class CommentApp extends React.Component {
+                constructor(props) {
+                    super(props)
+                    
+                    this.state = {
+                        displayComments: false,
+                        showEditIcon: false,
+                        pencilTop: 0,
+                        pencilLeft: 0,
+                        defaultComment: "",
+                        showCommentBox: false,
+                        commentsArray: [],
+                        refId: 1000,
+                        activeRefId: '',
+                        activeComments: [],
+                        highlightColor: 'lightgreen',
+                    }
+                    
+                    this.getSelectedText = this.getSelectedText.bind(this)
+                    this.toggleEdit = this.toggleEdit.bind(this)
+                    this.onCommentChange = this.onCommentChange.bind(this)
+                    this.saveComment = this.saveComment.bind(this)
+                    this.toggleBox = this.toggleBox.bind(this)
+                    this.updateColor = this.updateColor.bind(this)
+                }
+
+                componentDidMount() {
+                    if (!this.state.showCommentBox) {
+                        document.addEventListener('mouseup', this.getSelectedText)
+                        document.addEventListener('mouseup', this.toggleEdit)
+                    }
+
+                }		
+
+                getSelectedText() {
+				   /* document.addEventListener('mousedown', function (event) {
+  if (event.detail > 1) {
+    event.preventDefault();
+  }
+}, false);*/
+                    if (window.getSelection().getRangeAt(0)) {
+                        const selection = window.getSelection().getRangeAt(0);
+                        const selectedText = selection.extractContents();
+                        let span = document.createElement("span");
+                        span.style.background = this.state.highlightColor;
+                        span.setAttribute('data-id', this.state.refId + 1);
+                        span.id = this.state.refId + 1;
+                        span.appendChild(selectedText);
+                        span.addEventListener('mouseover', (e) => {
+                            const refId = e.target.getAttribute('data-id')
+                            let activeComments = this.state.commentsArray.filter(comment => comment.refId == refId)
+                            if (activeComments.length) {
+                                this.setState({ pencilLeft: e.screenX, pencilTop: e.screenY })
+                                this.setState({ activeComments: activeComments, displayComments: true })
+                            }
+                        })
+
+                        span.addEventListener('mouseout', () => {
+                            this.setState({ displayComments: false, activeComments: [] })
+                        })
+
+                        selection.insertNode(span)
+                        const positions = selection.getBoundingClientRect()
+                        this.setState({
+                            pencilTop: positions.top,
+                            pencilLeft: positions.left,
+                            activeRefId: this.state.refId + 1,
+                        })
+                    }
+                }
+
+                saveComment() {
+                    let commentsArray = this.state.commentsArray
+                    commentsArray.push({ 'refId': this.state.activeRefId, 'text': this.state.defaultComment })
+                    document.addEventListener('mouseup', this.getSelectedText)
+                    document.addEventListener('mouseup', this.toggleEdit)
+                    this.setState({
+                        showCommentBox: !this.state.showCommentBox,
+                        defaultComment: "",
+                        commentsArray: commentsArray,
+                        refId: this.state.refId + 2,
+                    })
+                }
+
+                onCommentChange(e) {
+                    this.setState({ defaultComment: e.target.value })
+                }
+
+                updateColor(e) {
+                    e.preventDefault()
+                    const backgroundcolor = e.target.getAttribute('data-color')
+                    const elementId = this.state.activeRefId
+                    let element = document.getElementById(elementId)
+                    element.style.background = backgroundcolor
+                }
+
+                toggleEdit() {
+                    if(this.state.showEditIcon) {
+                        this.setState({ showCommentBox: true, showEditIcon: false })
+                        document.removeEventListener('mouseup', this.getSelectedText)
+                        document.removeEventListener('mouseup', this.toggleEdit)
+
+                        return
+                    } else if (window.getSelection().toString().length) {
+                        this.setState({ showEditIcon: true })
+                    } else {
+                        this.setState({ showEditIcon: false, showCommentBox: false })
+                    }
+                }
+
+                toggleBox() {
+                    this.setState({ showCommentBox: !this.state.showCommentBox })
+                    document.addEventListener('mouseup', this.getSelectedText)
+                    document.addEventListener('mouseup', this.toggleEdit)
+                    const elementId = this.state.activeRefId
+                    let element = document.getElementById(elementId)
+                    element.style.background = 'none'
+					element.id = 'none',
+					element.setAttribute('data-id',  'none');
+                }
+
+                render() {
+                    return (
+                        <div className="container">
+                            <PanelBlock
+                                headerText="Scientist developed AI"
+                                showEditIcon={this.state.showEditIcon}
+                                toggleEdit={this.toggleEdit}
+                                pencilTop={this.state.pencilTop - 190}
+                                pencilLeft={this.state.pencilLeft - 90}
+                            />
+                            {this.state.showCommentBox &&
+                              <CommentBox
+                                defaultComment={this.state.defaultComment}
+                                onCommentChange={this.onCommentChange}
+                                saveComment={this.saveComment}
+                                toggleBox={this.toggleBox}
+                                pencilTop={this.state.pencilTop - 190}
+                                pencilLeft={this.state.pencilLeft - 90}
+                                changeColor={this.updateColor}
+                              />
+                            }
+
+                            {this.state.displayComments &&
+                              <DisplayComment
+                                  comments={this.state.activeComments}
+                                  pencilLeft={this.state.pencilLeft - 50}
+                                  pencilTop={this.state.pencilTop - 250}
+                              />
+                            }
+                        </div>
+                    )
+                }
+            }
+			
+            ReactDOM.render(<CommentApp />, document.getElementById('root'));
+        </script>
+    </body>
+</html>
+    
+    
